@@ -3779,15 +3779,15 @@ class CarlaHostPlugin(CarlaHostMeta):
     def _set_parameterScalePoint(self, pluginId, param, point, value, label):
         plugin = self.fPluginsInfo.get(pluginId, None)
         if plugin is None:
-            print("_set_parameterScalePointCount failed for", pluginId)
+            print("_set_parameterScalePoint failed for", pluginId)
             return
 
         if param < 0 or param >= plugin.parameterCount:
-            print("_set_parameterScalePointCount failed for parameter", param)
+            print("_set_parameterScalePoint failed for parameter", param)
             return
 
         if point < 0 or point >= plugin.parameterInfo[param]["scalePointCount"]:
-            print("_set_parameterScalePointCount failed for scale point", point)
+            print("_set_parameterScalePoint failed for scale point", point)
             return
 
         plugin.parameterScalePoints[param][point] = {
