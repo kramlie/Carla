@@ -589,6 +589,8 @@ protected:
                 CARLA_SAFE_ASSERT_RETURN(fUiServer.writeEmptyMessage(),);
             }
 
+            std::snprintf(tmpBuf, STR_MAX, "PARAMETER_SCALEPOINT_COUNT_%i:%i\n", pluginId, i);
+            CARLA_SAFE_ASSERT_RETURN(fUiServer.writeMessage(tmpBuf),);
             std::snprintf(tmpBuf, STR_MAX, "%i\n", plugin->getParameterScalePointCount(i));
             CARLA_SAFE_ASSERT_RETURN(fUiServer.writeMessage(tmpBuf),);
 

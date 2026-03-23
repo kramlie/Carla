@@ -280,7 +280,6 @@ class CarlaMiniW(ExternalUI, HostWindow):
             paramUnit = self.readlineblock()
             paramComment = self.readlineblock()
             paramGroupName = self.readlineblock()
-            scalePointCount = int(self.readlineblock())
 
             paramInfo = {
                 'name': paramName,
@@ -288,7 +287,7 @@ class CarlaMiniW(ExternalUI, HostWindow):
                 'unit': paramUnit,
                 'comment': paramComment,
                 'groupName': paramGroupName,
-                'scalePointCount': scalePointCount,
+                'scalePointCount': 0,
             }
             self.host._set_parameterInfo(pluginId, paramId, paramInfo)
 
@@ -317,6 +316,11 @@ class CarlaMiniW(ExternalUI, HostWindow):
                 'stepLarge': stepLarge
             }
             self.host._set_parameterRanges(pluginId, paramId, paramRanges)
+
+        elif msg.startswith("PARAMETER_SCALEPOINT_COUNT_"):
+            pluginId, paramId = [int(i) for i in msg.replace("PARAMETER_SCALEPOINT_COUNT_", "").split(":")]
+            scalePointCount = int(self.readlineblock())
+            self.host._set_parameterScalePointCount(pluginId, paramId, scalePointCount)
 
         elif msg.startswith("PARAMETER_SCALEPOINT_"):
             pluginId, param, point = [int(i) for i in msg.replace("PARAMETER_SCALEPOINT_", "").split(":")]

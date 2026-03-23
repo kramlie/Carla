@@ -3829,13 +3829,23 @@ class CarlaHostPlugin(CarlaHostMeta):
             return
         if paramIndex < plugin.parameterCount:
             plugin.parameterInfo[paramIndex] = info
+        else:
+            print("_set_parameterInfo failed for", pluginId, "and index", paramIndex)
+
+    def _set_parameterScalePointCount(self, pluginId, paramIndex, count):
+        plugin = self.fPluginsInfo.get(pluginId, None)
+        if plugin is None:
+            print("_set_parameterScalePointCount failed for", pluginId)
+            return
+        if paramIndex < plugin.parameterCount and paramIndex < len(plugin.parameterInfo):
+            plugin.parameterInfo[paramIndex]["scalePointCount"] = count
 
             # add placeholders
             plugin.parameterScalePoints[paramIndex] = []
-            for _ in range(info["scalePointCount"]):
+            for _ in range(count):
                 plugin.parameterScalePoints[paramIndex].append({})
         else:
-            print("_set_parameterInfo failed for", pluginId, "and index", paramIndex)
+            print("_set_parameterScalePointCount failed for", pluginId, "and index", paramIndex)
 
     def _set_parameterData(self, pluginId, paramIndex, data):
         plugin = self.fPluginsInfo.get(pluginId, None)
